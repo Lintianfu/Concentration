@@ -36,6 +36,7 @@ class ViewController: UIViewController {
                     print("6666")
                     print("1234")
                     print("这是我在yess分支第一次操作，还没有merge到master")
+                    print("这是我在yess分支第二次操作，还没有merge到master")
              }
     }
     func flipCard(withEmoji emoji:String,on button:UIButton) -> Void {
