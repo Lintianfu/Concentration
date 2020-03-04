@@ -34,7 +34,10 @@ class ViewController: UIViewController {
                     print("show error")
                     print("4444")
                     print("6666")
-                    print("1934")
+                    print("1234")
+                    print("这是我在yess分支第一次操作，还没有merge到master")
+                    print("这是我在yess分支第二次操作，还没有merge到master")
+                    print("这是我在yess分支第三次操作，测试完成，我要切回master了")
              }
     }
     func flipCard(withEmoji emoji:String,on button:UIButton) -> Void {
