@@ -33,6 +33,7 @@ class ViewController: UIViewController {
              {
                     print("show error")
                     print("4444")
+                    print("6666")
              }
     }
     func flipCard(withEmoji emoji:String,on button:UIButton) -> Void {
