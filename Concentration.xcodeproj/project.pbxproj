@@ -40,6 +40,7 @@
 		8B25D221240FF4F300596B53 = {
 			isa = PBXGroup;
 			children = (
+				8B25D241240FF4FB00596B53 /* Supportting file */,
 				8B25D22C240FF4F300596B53 /* Concentration */,
 				8B25D22B240FF4F300596B53 /* Products */,
 			);
@@ -56,15 +57,22 @@
 		8B25D22C240FF4F300596B53 /* Concentration */ = {
 			isa = PBXGroup;
 			children = (
-				8B25D22D240FF4F300596B53 /* AppDelegate.swift */,
-				8B25D22F240FF4F300596B53 /* SceneDelegate.swift */,
 				8B25D231240FF4F300596B53 /* ViewController.swift */,
 				8B25D233240FF4F300596B53 /* Main.storyboard */,
-				8B25D236240FF4F400596B53 /* Assets.xcassets */,
 				8B25D238240FF4F400596B53 /* LaunchScreen.storyboard */,
 				8B25D23B240FF4F400596B53 /* Info.plist */,
 			);
 			path = Concentration;
+			sourceTree = "<group>";
+		};
+		8B25D241240FF4FB00596B53 /* Supportting file */ = {
+			isa = PBXGroup;
+			children = (
+				8B25D22F240FF4F300596B53 /* SceneDelegate.swift */,
+				8B25D22D240FF4F300596B53 /* AppDelegate.swift */,
+				8B25D236240FF4F400596B53 /* Assets.xcassets */,
+			);
+			name = "Supportting file";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
