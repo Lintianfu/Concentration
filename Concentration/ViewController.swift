@@ -9,49 +9,56 @@
 import UIKit
 
 class ViewController: UIViewController {
+    //lazy 懒加载
+    lazy var game:Concentration=Concentration(numberOfPairsOfCards:(CardButtons.count+1)/2)
     @IBOutlet var CardButtons: [UIButton]!
     @IBOutlet weak var flipCountLabel: UILabel!
     var flipCount:Int=0
        {
            didSet
            {
-               flipCountLabel.text="FlipCount:\(flipCount)"
+            flipCountLabel.text="FlipCount:\(game.score)"
            }
        }
-    var emojis=["🦊","🙈","🐮","🦊","🙈","🐮"]
+    var emojis=["🦊","🙈","🐮","🐰","🐶","🦁","🐨","🦉","🐴"]
+    var emoji=[Int:String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
     @IBAction func touchCard(_ sender: UIButton) {
-        flipCount+=1
              if let cardNumber=CardButtons.firstIndex(of:sender)
              {
-                   flipCard(withEmoji: emojis[cardNumber], on: sender)
+                game.chooseCard(at: cardNumber)
+                updateViewFormModel()
              }else
              {
                     print("show error")
-                    print("4444")
-                    print("6666")
-                    print("1234")
-                    print("这是我在yess分支第一次操作，还没有merge到master")
-                    print("这是我在yess分支第二次操作，还没有merge到master")
-                    print("这是我在yess分支第三次操作，测试完成，我要切回master了")
              }
     }
-    func flipCard(withEmoji emoji:String,on button:UIButton) -> Void {
-        if button.currentTitle==emoji
+    func updateViewFormModel()  {
+        for index in CardButtons.indices
         {
-            button.setTitle("", for: UIControl.State.normal)
-            button.backgroundColor=#colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+            let button=CardButtons[index]
+            let card=game.cards[index]
+            if card.isFaceUp
+            {
+                button.setTitle(emoji(for:card), for: UIControl.State.normal)
+                button.backgroundColor=#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            }
+            else{
+                button.setTitle("", for: UIControl.State.normal)
+                button.backgroundColor=card.isMatch ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1):#colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+            }
         }
-        else{
-            button.setTitle(emoji, for: UIControl.State.normal)
-            button.backgroundColor=#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-        }
-       
     }
     
+    func emoji(for card:Card) -> String {
+        if emoji[card.identifiter] == nil,emojis.count>0{
+           let randomIndex = Int(arc4random_uniform(UInt32(emojis.count)))
+           emoji[card.identifiter] = emojis.remove(at: randomIndex)
+    }
+        return emoji[card.identifiter] ?? "?"
 }
-
+}
