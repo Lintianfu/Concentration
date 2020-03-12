@@ -7,12 +7,36 @@
 //
 
 import Foundation
-class Concentration
+struct Concentration
 {
     var cards=[Card]()
     var score:Int=0
     var indexOfOneAndOnlyFaceUpCard:Int?
-    func chooseCard(at index:Int) {
+    {
+        get{
+            var foundIndex:Int?
+            for index in cards.indices
+            {
+                if cards[index].isFaceUp
+                {
+                    if foundIndex==nil{
+                        foundIndex=index
+                    }
+                    else
+                    {
+                        return nil
+                    }
+                }
+            }
+            return foundIndex
+        }
+        set{
+            for index in cards.indices{
+                cards[index].isFaceUp=(index==newValue)
+            }
+        }
+    }
+   mutating func chooseCard(at index:Int) {
         if !cards[index].isMatch
         {
             
@@ -23,17 +47,12 @@ class Concentration
                     cards[index].isMatch=true
                     cards[matchIndex].isMatch=true
                     score+=1
+                    NotificationCenter.default.post(name: NSNotification.Name("isTest"), object: self, userInfo: ["post":"NewTest"])
                 }
                 cards[index].isFaceUp=true
-                indexOfOneAndOnlyFaceUpCard=nil
                 
             }else //不匹配的时候
             {
-                for flipDownIndex in cards.indices
-                {
-                    cards[flipDownIndex].isFaceUp=false
-                }
-                cards[index].isFaceUp=true
                 indexOfOneAndOnlyFaceUpCard=index
             }
         }

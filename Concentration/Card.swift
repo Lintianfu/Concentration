@@ -7,7 +7,8 @@
 //
 
 import Foundation
-struct Card {
+struct Card:Hashable
+{
     var isFaceUp=false
     var isMatch=false
     var identifiter:Int
@@ -16,7 +17,6 @@ struct Card {
     static func getUniqueIdentifiter()->Int  //静态方法
     {
         Card.identifiterFactory+=1
-        
         return Card.identifiterFactory
     }
     init() {

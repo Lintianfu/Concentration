@@ -13,11 +13,17 @@ class ViewController: UIViewController {
     lazy var game:Concentration=Concentration(numberOfPairsOfCards:(CardButtons.count+1)/2)
     @IBOutlet var CardButtons: [UIButton]!
     @IBOutlet weak var flipCountLabel: UILabel!
+    {
+        didSet
+        {
+            updateflipCountLabel()
+        }
+    }
     var flipCount:Int=0
        {
            didSet
            {
-            flipCountLabel.text="FlipCount:\(game.score)"
+            updateflipCountLabel()
            }
        }
     var emojis=["🦊","🙈","🐮","🐰","🐶","🦁","🐨","🦉","🐴"]
@@ -25,19 +31,29 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(test), name: NSNotification.Name(rawValue:"isTest"), object: nil)
+        
     }
 
     @IBAction func touchCard(_ sender: UIButton) {
              if let cardNumber=CardButtons.firstIndex(of:sender)
              {
+                flipCount+=1
                 game.chooseCard(at: cardNumber)
                 updateViewFormModel()
+               // print(String(game.indexOfOneAndOnlyFaceUpCard!))
              }else
              {
                     print("show error")
              }
     }
-    func updateViewFormModel()  {
+    @objc func test(nofi : Notification)
+    {
+            //updateViewFormModel()
+        print("收到更新通知")
+    }
+     func updateViewFormModel()  {
+       
         for index in CardButtons.indices
         {
             let button=CardButtons[index]
@@ -53,6 +69,13 @@ class ViewController: UIViewController {
             }
         }
     }
+    func updateflipCountLabel()
+    {
+        let attributes:[NSAttributedString.Key:Any]=[.strokeWidth:5.0,.strokeColor:#colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)]
+        let attributedString=NSAttributedString(string: "FlipCount:\(game.score)", attributes: attributes)
+        flipCountLabel.attributedText=attributedString
+        
+    }
     
     func emoji(for card:Card) -> String {
         if emoji[card.identifiter] == nil,emojis.count>0{
@@ -61,4 +84,7 @@ class ViewController: UIViewController {
     }
         return emoji[card.identifiter] ?? "?"
 }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
